@@ -31,7 +31,14 @@ class TemplateManager
         return strpos($text, '[' . $key . ':' . $pattern . ']') !== false;
     }
 
-    private function replaceText($text, $key, $pattern, $replace)
+    /**
+     * @param $text
+     * @param $key
+     * @param $pattern
+     * @param $replace
+     * @return mixed
+     */
+    private function checkAndReplace($text, $key, $pattern, $replace)
     {
         if (!$this->checkPatternExists($text, $key, $pattern)) {
             return $text;
@@ -59,17 +66,17 @@ class TemplateManager
         $destination = DestinationRepository::getInstance()->getById($data['quote']->getDestinationId());
 
         // Replace Quote Patterns
-        $text = $this->replaceText($text, 'quote', 'summary_html', Quote::renderHtml($quote));
-        $text = $this->replaceText($text, 'quote', 'summary', Quote::renderText($quote));
-        $text = $this->replaceText($text, 'quote', 'destination_name', $destination->getCountryName());
+        $text = $this->checkAndReplace($text, 'quote', 'summary_html', Quote::renderHtml($quote));
+        $text = $this->checkAndReplace($text, 'quote', 'summary', Quote::renderText($quote));
+        $text = $this->checkAndReplace($text, 'quote', 'destination_name', $destination->getCountryName());
         if (!empty($destination)) {
             $replace = $site->getUrl() . '/' . $destination->getCountryName() . '/quote/' . $quote->getId();
-            $text = $this->replaceText($text, 'quote', 'destination_link', $replace);
+            $text = $this->checkAndReplace($text, 'quote', 'destination_link', $replace);
         } else {
             $text = str_replace('[quote:destination_link]', '', $text);
         }
         // Replace User Patterns
-        $text = $this->replaceText($text, 'user', 'first_name', ucfirst(mb_strtolower($user->getFirstname())));
+        $text = $this->checkAndReplace($text, 'user', 'first_name', ucfirst(mb_strtolower($user->getFirstname())));
         return $text;
     }
 }
