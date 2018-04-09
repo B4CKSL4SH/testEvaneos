@@ -32,11 +32,11 @@ class TemplateManager
     }
 
     /**
-     * @param $text
-     * @param $key
-     * @param $pattern
-     * @param $replace
-     * @return mixed
+     * @param string $text
+     * @param string $key
+     * @param string $pattern
+     * @param string $replace
+     * @return string
      */
     private function checkAndReplace($text, $key, $pattern, $replace)
     {
