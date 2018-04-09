@@ -2,10 +2,10 @@
 
 class Quote
 {
-    public $id;
-    public $siteId;
-    public $destinationId;
-    public $dateQuoted;
+    private $id;
+    private $siteId;
+    private $destinationId;
+    private $dateQuoted;
 
     public function __construct($id, $siteId, $destinationId, $dateQuoted)
     {
@@ -23,5 +23,25 @@ class Quote
     public static function renderText(Quote $quote)
     {
         return (string)$quote->id;
+    }
+
+    public function getSiteId()
+    {
+        return $this->siteId;
+    }
+
+    public function getDestinationId()
+    {
+        return $this->destinationId;
+    }
+
+    public function getDateQuoted()
+    {
+        return $this->dateQuoted;
+    }
+
+    public function getId()
+    {
+        return $this->id;
     }
 }
