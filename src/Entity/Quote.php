@@ -22,6 +22,6 @@ class Quote
 
     public static function renderText(Quote $quote)
     {
-        return (string) $quote->id;
+        return (string)$quote->id;
     }
 }
